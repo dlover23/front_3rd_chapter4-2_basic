@@ -21,7 +21,7 @@ function displayProducts(products) {
     img.src = product.image;
     img.alt = `product: ${product.title}`;
     img.width = 250;
-    img.height = 80;
+    img.height = 100;
     img.loading = "lazy";
     pictureDiv.appendChild(img);
 
@@ -61,9 +61,20 @@ function displayProducts(products) {
   });
 }
 
-loadProducts();
+window.onload = () => {
+  let status = "idle";
 
-// Simulate heavy operation. It could be a complex price calculation.
-for (let i = 0; i < 10000000; i++) {
-  const temp = Math.sqrt(i) * Math.sqrt(i);
-}
+  let productSection = document.querySelector("#all-products");
+
+  window.onscroll = () => {
+    let position = productSection.getBoundingClientRect().top - (window.scrollY + window.innerHeight);
+
+    if (status == "idle" && position <= 0) {
+      loadProducts();
+
+      for (let i = 0; i < 10000000; i++) {
+        const temp = Math.sqrt(i) * Math.sqrt(i);
+      }
+    }
+  };
+};
